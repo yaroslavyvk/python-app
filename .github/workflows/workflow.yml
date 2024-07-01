@@ -5,9 +5,12 @@ run-name: ${{ github.actor }} is testing out GitHub Actions
 
 env:
   APP_ENV: PythonApp
+  GITHUB_ACTIONS: "true'
 
 # Controls when the workflow will run
 on:
+  schedule:
+  - cron: '*/15 * * * *'
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
@@ -29,6 +32,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - run: echo "GITHUB_ACTIONS: $GITHUB_ACTIONS"
     - run: echo " ${{ env.APP_ENV }} - ${{ env.CONFIG_TYPE }} - ${{ env.PYTHON_VERSION }}"
     - run: echo "Job was triggered by event ${{ github.event_name }}"
     - run: echo "This job is executed on a runner with os ${{ runner.os }}"
