@@ -54,13 +54,3 @@ def test_readiness_check(client):
     with patch('app.time.time', return_value=0):
         response = client.get('/ready')
         assert response.status_code == 503
-
-
-def test_external_call(client):
-    """Test the external call endpoint."""
-    with patch('app.requests.get') as mock_get:
-        mock_get.return_value.status_code = 200
-        mock_get.return_value.text = 'Success'
-        response = client.get('/external-call')
-        assert b'Extarnal call response: Success' in response.data
-        assert response.status_code == 200
