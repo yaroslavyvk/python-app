@@ -40,4 +40,4 @@ jobs:
           flake8 . --statistics --max-complexity=10 --exit-zero
       - name: Run unit test
         run: |
-          pytest
+          pytest -v --cov=. --cov-report=term-missing  --cov-report=json
