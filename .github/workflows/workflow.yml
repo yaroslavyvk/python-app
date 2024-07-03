@@ -48,8 +48,8 @@ jobs:
         path: .
 
   build-image:
+    needs: ['python-ci']
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/dowload-artifact@v4
       with:
