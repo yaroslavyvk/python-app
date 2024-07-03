@@ -11,38 +11,47 @@ env:
   PYTHON_VERSION: 3.8
 
 jobs:
-    python-ci:
-      runs-on: ubuntu-latest
+  python-ci:
+    runs-on: ubuntu-latest
 
-      defaults:
-        run:
-          working-directory: ./src
-      steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Setup Python ${{ env.PYTHON_VERSION}}
-        with:
-          python-version: '${{ env.PYTHON_VERSION}}'
-      - name: Install Dependecies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest pytest-cov
-          pip install -r requirements.txt
+    defaults:
+      run:
+        working-directory: ./src
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      name: Setup Python ${{ env.PYTHON_VERSION}}
+      with:
+        python-version: '${{ env.PYTHON_VERSION}}'
+    - name: Install Dependecies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest pytest-cov
+        pip install -r requirements.txt
 
-      - name: Lint
-        run: |
-          cd ../
-          flake8 . --show-source --statistics
+    - name: Lint
+      run: |
+        cd ../
+        flake8 . --show-source --statistics
 
-      - name: Check Complexity
-        run: |
-          cd ../
-          flake8 . --statistics --max-complexity=10 --exit-zero
-      - name: Run unit test
-        run: |
-          pytest -v --cov=. --cov-report=term-missing  --cov-report=json
-      - name: Upload python artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-artifacts
-          path: .
+    - name: Check Complexity
+      run: |
+        cd ../
+        flake8 . --statistics --max-complexity=10 --exit-zero
+    - name: Run unit test
+      run: |
+        pytest -v --cov=. --cov-report=term-missing  --cov-report=json
+    - name: Upload python artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-artifacts
+        path: .
+
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/dowload-artifact@v4
+      with:
+        name: python-artifacts
+        path: .
