@@ -140,7 +140,7 @@ jobs:
 
     - name: Deploy helm to Development
       run: |
-        helm upgrade --install --atomic --wait --timeout 3600s --debug todoapp ./todoapp-*.tgz \
+        helm upgrade --install --atomic --wait --timeout 3600s --debug todoapp ./todoapp*.tgz \
           -f ./todoapp.values.yaml \
           --set mysql.configs.MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
           --set mysql.configs.MYSQL_USER="${{ secrets.MYSQL_USER }}" \
