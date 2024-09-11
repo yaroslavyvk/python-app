@@ -3,9 +3,9 @@ run-name: ${{ github.actor }} - ${{ github.ref_name }}
 
 on:
   push:
-    branch: ["main"]
+    branches: ["main"]
   pull_request:
-    branch: ["main"]
+    branches: ["main"]
 
 jobs:
   python-ci:
@@ -14,3 +14,6 @@ jobs:
     steps:
 
     - uses: actions/checkout@v4
+
+    - name: Check what is copied
+      run: "ls -la"
