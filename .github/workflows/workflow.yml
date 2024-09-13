@@ -12,8 +12,8 @@ env:
   DOCKER_IMAGE_NAME: kube2py
 
 concurrency:
-  group: python-deployment-${{ github.ref_name }}
-  cancel-in-progress: true
+  group: python-deployment-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref == 'refs/heads/main' }}
 
 jobs:
   python-ci:
@@ -63,6 +63,12 @@ jobs:
       with:
         name: helm-artifacts
         path: ${{ github.workspace }}/helm-charts
+
+
+    - name: Debug GitHub Context
+      run: |
+        echo "GitHub Ref: ${{ github.ref }}"
+        echo "GitHub Ref Name: ${{ github.ref_name }}"
 
   build-image:
 
