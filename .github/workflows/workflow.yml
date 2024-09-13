@@ -11,6 +11,10 @@ env:
   PYTHON_VERSION: 3.8
   DOCKER_IMAGE_NAME: kube2py
 
+concurrency:
+  group: python-deployment-${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   python-ci:
     runs-on: ubuntu-latest
@@ -50,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: python-artifacts
-        path: ./src
+        path: .
 
 
     - name: Upload Artifacts
