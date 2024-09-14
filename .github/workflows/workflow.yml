@@ -121,13 +121,3 @@ jobs:
         name: helm-package
         path: ./*.tgz
 
-
-      deploy-helm:
-    runs-on: ubuntu-latest
-    needs:  [build-image, helm-ci]
-
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name:
-          path: .
